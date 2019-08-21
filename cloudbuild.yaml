@@ -3,5 +3,5 @@ steps:
       args: ["build", "-t", "gcr.io/devopstest-250411/spindevops", "."]
 timeout: "500s"
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/my-project/my-image']
+  args: ['push', 'gcr.io/devopstest-250411/spindevops']
 images: ['gcr.io/devopstest-250411/spindevops']
