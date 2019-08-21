@@ -19,11 +19,11 @@ RUN apt-get update -y \
     # && tar zxvf /tmp/swoole.tar.gz \
     # && cd swoole-src* \
     # && phpize \
-    && ./configure \
-    --enable-coroutine \
-    --enable-async-redis \
-    --enable-coroutine-postgresql \
-    && make \
+    # && ./configure \
+    # --enable-coroutine \
+    # --enable-async-redis \
+    # --enable-coroutine-postgresql \
+    # && make \
     && make install \
     && chown -R www-data.www-data $APP_DIR \
     && /build-scripts/composer.sh;
