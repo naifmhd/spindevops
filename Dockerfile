@@ -1,6 +1,22 @@
-FROM creativitykills/nginx-php-server:2.0.0
-LABEL Neo Ighodaro <neo@hotels.ng>
-ENV PORT 80
-ENV HOST 0.0.0.0
-COPY . /var/www/
-RUN chmod -Rf 777 /var/www/storage/
+FROM composer:latest AS composer
+
+COPY composer.json composer.lock ./
+
+# Install all Composer packages
+RUN composer install --no-interaction --prefer-dist \
+    # We are adding these two arguments so we can have composer install cached
+    # See https://www.sentinelstand.com/article/composer-install-in-dockerfile-without-breaking-cache
+    --no-scripts --no-autoloader
+
+COPY . ./
+
+# Run commands that generate unique files every time
+RUN composer dump-autoload --optimize
+
+FROM erictendian/phppm-nginx:latest
+
+COPY . ./
+
+COPY --from=composer /app/vendor ./vendor/
+
+CMD ["--bootstrap=laravel", "--static-directory=public/"]
