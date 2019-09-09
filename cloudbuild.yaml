@@ -10,7 +10,7 @@ steps:
     - name: "gcr.io/cloud-builders/gsutil"
       args:
           - cp
-          - .env.example
+          - .env.prod
           - .env
     - name: "docker/compose:1.23.1"
       args:
